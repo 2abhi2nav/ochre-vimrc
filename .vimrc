@@ -34,7 +34,7 @@ call plug#end()
 " Colorscheme and GUI
 
 set background=dark
-let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_dark = 'medium'
 colorscheme gruvbox
 let g:lightline = { 'colorscheme': 'gruvbox', }
 
