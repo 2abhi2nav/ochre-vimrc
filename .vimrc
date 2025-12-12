@@ -7,7 +7,7 @@ set nocompatible
 set autoindent
 set laststatus=2
 set noshowmode
-set relativenumber
+set number relativenumber
 set mouse=a
 
 set backspace=indent,eol,start
@@ -24,7 +24,7 @@ inoremap <expr> <cr> getline(".")[col(".")-2:col(".")-1]=="{}" ? "<cr><esc>O" : 
 " Plugins
 
 call plug#begin()
-Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 Plug 'itchyny/lightline.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -33,10 +33,11 @@ call plug#end()
 
 " Colorscheme and GUI
 
+set termguicolors
 set background=dark
-let g:gruvbox_contrast_dark = 'medium'
-colorscheme gruvbox
-let g:lightline = { 'colorscheme': 'gruvbox', }
+
+colorscheme gruvbox-material
+let g:lightline = { 'colorscheme': 'gruvbox_material', }
 
 " Coc Options
 
