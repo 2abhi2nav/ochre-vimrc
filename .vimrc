@@ -16,17 +16,13 @@ set tabstop=4
 
 " Keymaps
 
-inoremap kj <Esc>
-vnoremap kj <Esc>
-nnoremap <leader>f gg=G''
-inoremap <expr> <cr> getline(".")[col(".")-2:col(".")-1]=="{}" ? "<cr><esc>O" : "<cr>"
+
 
 " Plugins
 
 call plug#begin()
 Plug 'sainnhe/gruvbox-material'
 Plug 'itchyny/lightline.vim'
-Plug 'Townk/vim-autoclose'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 call plug#end()
@@ -70,7 +66,9 @@ function! ShowDocumentation()
   endif
 endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent :call CocActionAsync('highlight')
+
+nmap <leader>f :call CocAction('format')<CR>
 
 nmap <leader>rn <Plug>(coc-rename)
 
