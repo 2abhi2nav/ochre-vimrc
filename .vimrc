@@ -5,6 +5,7 @@ syntax on
 
 set nocompatible
 set autoindent
+
 set laststatus=2
 set noshowmode
 set number relativenumber
@@ -14,14 +15,13 @@ set backspace=indent,eol,start
 set shiftwidth=4
 set tabstop=4
 
-" Keymaps
-
+" Non-Plugin Keymaps
 
 
 " Plugins
 
 call plug#begin()
-Plug 'sainnhe/gruvbox-material'
+Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
@@ -32,10 +32,10 @@ call plug#end()
 set termguicolors
 set background=dark
 
-colorscheme gruvbox-material
-let g:lightline = { 'colorscheme': 'gruvbox_material', }
+colorscheme onedark
+let g:lightline = { 'colorscheme': 'onedark', }
 
-" Coc Options
+" CoC Options
 
 set encoding=utf-8
 set nobackup
