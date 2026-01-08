@@ -2,33 +2,51 @@
 
 filetype plugin indent on
 syntax on
-
 set nocompatible
-set autoindent
+set clipboard=unnamedplus
+
 set laststatus=2
 set noshowmode
 set number relativenumber
 set mouse=a
 
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+set wrap
+set linebreak
+set nolist
+set textwidth=0
+
+set autoindent
 set backspace=indent,eol,start
 set shiftwidth=4
 set tabstop=4
 
-" Keymaps
+" Non-Plugin Keymaps
 
-inoremap kj <Esc>
-vnoremap kj <Esc>
-nnoremap <leader>f gg=G''
-inoremap <expr> <cr> getline(".")[col(".")-2:col(".")-1]=="{}" ? "<cr><esc>O" : "<cr>"
+let mapleader=" "
+
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+tnoremap <Esc> <C-\><C-n>
 
 " Plugins
 
 call plug#begin()
-Plug 'sainnhe/gruvbox-material'
+Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'Townk/vim-autoclose'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
+Plug 'preservim/nerdtree'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " Colorscheme and GUI
@@ -36,22 +54,19 @@ call plug#end()
 set termguicolors
 set background=dark
 
-colorscheme gruvbox-material
-let g:lightline = { 'colorscheme': 'gruvbox_material', }
+set guifont=agave\ nerd\ font\ 13
+set guioptions-=T
 
-" Coc Options
+colorscheme onedark
+let g:lightline = { 'colorscheme': 'one', }
+
+" CoC Options
 
 set encoding=utf-8
 set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
-
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
 nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
@@ -70,7 +85,9 @@ function! ShowDocumentation()
   endif
 endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent :call CocActionAsync('highlight')
+
+nmap <leader>f :call CocAction('format')<CR>
 
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -81,4 +98,13 @@ xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 
 nmap <leader>cl  <Plug>(coc-codelens-action)
+
+
+" NerdTree Options
+
+nnoremap <leader>e :NERDTreeToggle<CR>
+
+" Indent Guide Options
+
+let g:indent_guides_enable_on_vim_startup = 1
 
