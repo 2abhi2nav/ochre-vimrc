@@ -41,24 +41,20 @@ tnoremap <Esc> <C-\><C-n>
 " Plugins
 
 call plug#begin()
-Plug 'joshdick/onedark.vim'
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'preservim/nerdtree'
-Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " Colorscheme and GUI
 
-set termguicolors
 set background=dark
+set termguicolors
 
-set guifont=agave\ nerd\ font\ 13
-set guioptions-=T
-
-colorscheme onedark
-let g:lightline = { 'colorscheme': 'one', }
+colorscheme tokyonight
+let g:lightline = {'colorscheme' : 'tokyonight'}
 
 " CoC Options
 
@@ -67,6 +63,7 @@ set nobackup
 set nowritebackup
 set updatetime=300
 set signcolumn=yes
+highlight SignColumn guibg=NONE ctermbg=NONE
 
 nmap <silent><nowait> [g <Plug>(coc-diagnostic-prev)
 nmap <silent><nowait> ]g <Plug>(coc-diagnostic-next)
