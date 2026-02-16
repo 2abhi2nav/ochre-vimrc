@@ -41,7 +41,7 @@ tnoremap <Esc> <C-\><C-n>
 " Plugins
 
 call plug#begin()
-Plug 'ghifarit53/tokyonight-vim'
+Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
@@ -53,8 +53,8 @@ call plug#end()
 set background=dark
 set termguicolors
 
-colorscheme tokyonight
-let g:lightline = {'colorscheme' : 'tokyonight'}
+colorscheme gruvbox
+let g:lightline = {'colorscheme' : 'gruvbox'}
 
 " CoC Options
 
