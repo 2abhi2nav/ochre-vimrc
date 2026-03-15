@@ -16,9 +16,11 @@ vim.o.breakindent = true
 vim.o.mouse = "a"
 vim.o.showmode = false
 
-vim.schedule(function()
-	vim.o.clipboard = "unnamedplus"
-end)
+vim.schedule(
+	function()
+		vim.o.clipboard = "unnamedplus"
+	end
+)
 
 vim.o.breakindent = true
 vim.o.autoindent = true

@@ -1,0 +1,10 @@
+{
+  "codeLens.enable": false,
+  "Lua": {
+    "diagnostics": {
+      "globals": [
+        "vim"
+      ]
+    }
+  }
+}
