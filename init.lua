@@ -92,7 +92,7 @@ vim.cmd('silent! colorscheme github_dark')
 
 require('github-theme').setup()
 require('lualine').setup({
-	options = { theme = 'material' }
+	options = { theme = 'nord' }
 })
 require('nvim-web-devicons').setup()
 require('mini.pick').setup()
