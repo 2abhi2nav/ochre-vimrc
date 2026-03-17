@@ -101,6 +101,12 @@ require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
 
+-- MINI.PICK OPTIONS
+
+vim.keymap.set("n", "<leader>sf", ":Pick files<CR>", { silent = true })
+vim.keymap.set("n", "<leader>sg", ":Pick grep_live<CR>", { silent = true })
+vim.keymap.set("n", "<leader>sb", ":Pick buffers<CR>", { silent = true })
+
 -- COC OPTIONS
 
 local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
