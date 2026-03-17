@@ -104,13 +104,55 @@ require('mini.pairs').setup()
 
 -- COC OPTIONS
 
+local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
+
+-- Make <CR> accept selected completion item and notify coc.nvim to autoindent
+vim.keymap.set("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+
 -- Use [g and ]g to navigate diagnostics
-vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
-vim.keymap.set("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
+vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
+vim.keymap.set("n", "]g", "<Plug>(coc-diagnostic-next)", { silent = true })
 
 -- Code navigation
-vim.keymap.set("n", "gd", "<Plug>(coc-definition)", {silent = true})
-vim.keymap.set("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-vim.keymap.set("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-vim.keymap.set("n", "gr", "<Plug>(coc-references)", {silent = true})
+vim.keymap.set("n", "gd", "<Plug>(coc-definition)", { silent = true })
+vim.keymap.set("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
+vim.keymap.set("n", "gi", "<Plug>(coc-implementation)", { silent = true })
+vim.keymap.set("n", "gr", "<Plug>(coc-references)", { silent = true })
 
+-- Use K to show documentation in preview window
+function _G.show_docs()
+	local cw = vim.fn.expand('<cword>')
+	if vim.fn.index({ 'vim', 'help' }, vim.bo.filetype) >= 0 then
+		vim.api.nvim_command('h ' .. cw)
+	elseif vim.api.nvim_eval('coc#rpc#ready()') then
+		vim.fn.CocActionAsync('doHover')
+	else
+		vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+	end
+end
+
+vim.keymap.set("n", "K", '<CMD>lua _G.show_docs()<CR>', { silent = true })
+
+-- Highlight the symbol and its references on a CursorHold event (cursor is idle)
+vim.api.nvim_create_augroup("CocGroup", {})
+vim.api.nvim_create_autocmd("CursorHold", {
+	group = "CocGroup",
+	command = "silent call CocActionAsync('highlight')",
+	desc = "Highlight symbol under cursor on CursorHold"
+})
+
+-- Symbol renaming
+vim.keymap.set("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
+
+-- Format current buffer
+vim.keymap.set("n", "<space>f", ":call CocAction('format')<cr>")
+
+-- Mappings for CoCList
+---@diagnostic disable-next-line: redefined-local
+local opts = { silent = true, nowait = true }
+-- Show all diagnostics
+vim.keymap.set("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
+-- Manage extensions
+vim.keymap.set("n", "<space>e", ":<C-u>CocList extensions<cr>", opts)
+-- Show commands
+vim.keymap.set("n", "<space>c", ":<C-u>CocList commands<cr>", opts)
