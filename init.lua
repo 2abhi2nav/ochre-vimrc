@@ -81,7 +81,7 @@ local vim = vim
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
-Plug('projekt0n/github-nvim-theme')
+Plug('ellisonleao/gruvbox.nvim')
 Plug('nvim-lualine/lualine.nvim')
 Plug('nvim-tree/nvim-web-devicons')
 Plug('nvim-mini/mini.pick')
@@ -91,11 +91,10 @@ Plug('sheerun/vim-polyglot')
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 vim.call('plug#end')
 
-vim.cmd('silent! colorscheme github_dark')
+vim.cmd('silent! colorscheme gruvbox')
 
-require('github-theme').setup()
 require('lualine').setup({
-	options = { theme = 'nord' }
+	options = { theme = 'gruvbox' }
 })
 require('nvim-web-devicons').setup()
 require('mini.pick').setup()
