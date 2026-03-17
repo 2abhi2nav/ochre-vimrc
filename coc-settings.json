@@ -1,5 +1,5 @@
 {
-  "codeLens.enable": false,
+  "inlayHint.enable": false,
   "Lua": {
     "diagnostics": {
       "globals": [

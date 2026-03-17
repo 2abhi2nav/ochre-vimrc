@@ -87,6 +87,7 @@ Plug('nvim-tree/nvim-web-devicons')
 Plug('nvim-mini/mini.pick')
 Plug('nvim-mini/mini.diff')
 Plug('nvim-mini/mini.pairs')
+Plug('sheerun/vim-polyglot')
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 vim.call('plug#end')
 
@@ -100,3 +101,16 @@ require('nvim-web-devicons').setup()
 require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
+
+-- COC OPTIONS
+
+-- Use [g and ]g to navigate diagnostics
+vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
+vim.keymap.set("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
+
+-- Code navigation
+vim.keymap.set("n", "gd", "<Plug>(coc-definition)", {silent = true})
+vim.keymap.set("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+vim.keymap.set("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+vim.keymap.set("n", "gr", "<Plug>(coc-references)", {silent = true})
+
