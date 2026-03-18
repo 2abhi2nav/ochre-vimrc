@@ -81,7 +81,7 @@ local vim = vim
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
-Plug('ellisonleao/gruvbox.nvim')
+Plug('navarasu/onedark.nvim')
 Plug('nvim-lualine/lualine.nvim')
 Plug('nvim-tree/nvim-web-devicons')
 Plug('nvim-mini/mini.pick')
@@ -91,15 +91,24 @@ Plug('sheerun/vim-polyglot')
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 vim.call('plug#end')
 
-vim.cmd('silent! colorscheme gruvbox')
-
+require('onedark').setup({
+    code_style = {
+        comments = 'none',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none'
+    },
+})
 require('lualine').setup({
-	options = { theme = 'gruvbox' }
+	options = { theme = 'onedark' }
 })
 require('nvim-web-devicons').setup()
 require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
+
+vim.cmd('silent! colorscheme onedark')
 
 -- MINI.PICK OPTIONS
 
