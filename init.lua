@@ -99,6 +99,9 @@ require('onedark').setup({
         strings = 'none',
         variables = 'none'
     },
+	colors = {
+		bg0 = '#1e222a',
+	},
 })
 
 require('lualine').setup({
@@ -125,7 +128,7 @@ require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
 
-vim.cmd('silent! colorscheme onedark')
+require('onedark').load()
 
 -- MINI.PICK OPTIONS
 
