@@ -100,9 +100,26 @@ require('onedark').setup({
         variables = 'none'
     },
 })
+
 require('lualine').setup({
-	options = { theme = 'onedark' }
+	options = {
+		theme = "onedark",
+		component_separators = { left = '|', right = '|'},
+		section_separators = { left = '░', right = '░'},
+	},
+	sections = {
+		lualine_a = {
+			{
+				function()
+				  return " " .. require('lualine.utils.mode').get_mode()
+				end,
+			},
+		},
+		lualine_b = {'filename'},
+		lualine_c = {'branch', 'diff', 'diagnostics'},
+	},
 })
+
 require('nvim-web-devicons').setup()
 require('mini.pick').setup()
 require('mini.diff').setup()
