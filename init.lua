@@ -9,12 +9,14 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 vim.o.relativenumber = true
 
+vim.o.statusline ='%<%f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
+vim.o.showmode = true
+
 vim.o.wrap = true
 vim.o.linebreak = true
 vim.o.breakindent = true
 
 vim.o.mouse = "a"
-vim.o.showmode = false
 
 vim.schedule(
 	function()
@@ -82,7 +84,6 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 Plug('navarasu/onedark.nvim')
-Plug('nvim-lualine/lualine.nvim')
 Plug('nvim-tree/nvim-web-devicons')
 Plug('nvim-mini/mini.pick')
 Plug('nvim-mini/mini.diff')
@@ -101,25 +102,6 @@ require('onedark').setup({
     },
 	colors = {
 		bg0 = '#1e222a',
-	},
-})
-
-require('lualine').setup({
-	options = {
-		theme = "onedark",
-		component_separators = { left = '|', right = '|'},
-		section_separators = { left = '░', right = '░'},
-	},
-	sections = {
-		lualine_a = {
-			{
-				function()
-				  return " " .. require('lualine.utils.mode').get_mode()
-				end,
-			},
-		},
-		lualine_b = {'filename'},
-		lualine_c = {'branch', 'diff', 'diagnostics'},
 	},
 })
 
