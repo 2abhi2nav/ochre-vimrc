@@ -46,7 +46,7 @@ vim.o.list = true
 vim.opt.listchars = { tab = "| ", trail = "·", nbsp = "␣" }
 
 vim.o.cursorline = true
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = 'yes'
 vim.o.scrolloff = 10
 
 vim.o.confirm = true
@@ -110,7 +110,7 @@ require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
 
-require('onedark').load()
+vim.cmd('colorscheme onedark')
 
 -- MINI.PICK OPTIONS
 
