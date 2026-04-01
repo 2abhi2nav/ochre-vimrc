@@ -45,11 +45,11 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = "| ", trail = "·", nbsp = "␣" }
 
-vim.o.cursorline = true
 vim.o.signcolumn = 'yes'
 vim.o.scrolloff = 10
 
 vim.o.confirm = true
+vim.o.swapfile = true
 
 -- KEYMAPS
 
@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.hl.on_yank()
+		vim.highlight.on_yank()
 	end,
 })
 
