@@ -1,5 +1,8 @@
 -- GLOBAL OPTIONS
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -9,7 +12,7 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.statusline ='%<%f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
+vim.o.statusline = '%<%f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
 vim.o.showmode = true
 
 vim.o.wrap = true
@@ -42,7 +45,7 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
-vim.o.list = true
+vim.o.list = false
 vim.opt.listchars = { tab = "| ", trail = "·", nbsp = "␣" }
 
 vim.o.signcolumn = 'yes'
@@ -85,32 +88,49 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 Plug('navarasu/onedark.nvim')
 Plug('nvim-tree/nvim-web-devicons')
+Plug('nvim-tree/nvim-tree.lua')
 Plug('nvim-mini/mini.pick')
 Plug('nvim-mini/mini.diff')
 Plug('nvim-mini/mini.pairs')
 Plug('sheerun/vim-polyglot')
+Plug('lukas-reineke/indent-blankline.nvim')
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 vim.call('plug#end')
 
 require('onedark').setup({
-    code_style = {
-        comments = 'none',
-        keywords = 'none',
-        functions = 'none',
-        strings = 'none',
-        variables = 'none'
-    },
-	colors = {
-		bg0 = '#1e222a',
+	code_style = {
+		comments = 'none',
+		keywords = 'none',
+		functions = 'none',
+		strings = 'none',
+		variables = 'none'
 	},
 })
 
 require('nvim-web-devicons').setup()
+
+require("nvim-tree").setup({
+	view = {
+		width = 35,
+	},
+	renderer = {
+		group_empty = true,
+	},
+	filters = {
+		dotfiles = false,
+	},
+})
+
 require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
+require("ibl").setup()
 
 vim.cmd('colorscheme onedark')
+
+-- NVIM-TREE OPTIONS
+
+vim.keymap.set("n", "\\", ":NvimTreeToggle<CR>", { silent = true })
 
 -- MINI.PICK OPTIONS
 
