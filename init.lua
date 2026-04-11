@@ -1,8 +1,5 @@
 -- GLOBAL OPTIONS
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -56,6 +53,9 @@ vim.o.swapfile = true
 
 -- KEYMAPS
 
+-- Remap for netrw
+vim.keymap.set("n", "\\", ":Ex<CR>", { silent = true })
+
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -73,8 +73,8 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	desc = "Highlight when yanking text",
+	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
 	end,
@@ -88,7 +88,6 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 Plug('navarasu/onedark.nvim')
 Plug('nvim-tree/nvim-web-devicons')
-Plug('nvim-tree/nvim-tree.lua')
 Plug('nvim-mini/mini.pick')
 Plug('nvim-mini/mini.diff')
 Plug('nvim-mini/mini.pairs')
@@ -109,18 +108,6 @@ require('onedark').setup({
 
 require('nvim-web-devicons').setup()
 
-require("nvim-tree").setup({
-	view = {
-		width = 35,
-	},
-	renderer = {
-		group_empty = true,
-	},
-	filters = {
-		dotfiles = false,
-	},
-})
-
 require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
@@ -128,15 +115,11 @@ require("ibl").setup()
 
 vim.cmd('colorscheme onedark')
 
--- NVIM-TREE OPTIONS
-
-vim.keymap.set("n", "\\", ":NvimTreeToggle<CR>", { silent = true })
-
 -- MINI.PICK OPTIONS
 
-vim.keymap.set("n", "<leader>sf", ":Pick files<CR>", { silent = true })
-vim.keymap.set("n", "<leader>sg", ":Pick grep_live<CR>", { silent = true })
-vim.keymap.set("n", "<leader>sb", ":Pick buffers<CR>", { silent = true })
+vim.keymap.set("n", "<leader>ff", ":Pick files<CR>", { silent = true })
+vim.keymap.set("n", "<leader>fg", ":Pick grep_live<CR>", { silent = true })
+vim.keymap.set("n", "<leader>fb", ":Pick buffers<CR>", { silent = true })
 
 -- COC OPTIONS
 
