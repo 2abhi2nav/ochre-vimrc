@@ -11,6 +11,7 @@ vim.o.relativenumber = true
 
 vim.o.statusline = '%<%f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
 vim.o.showmode = true
+vim.o.modeline = false
 
 vim.o.wrap = true
 vim.o.linebreak = true
@@ -125,8 +126,8 @@ vim.keymap.set("n", "<leader>fb", ":Pick buffers<CR>", { silent = true })
 
 local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
 
--- Make <CR> accept selected completion item and notify coc.nvim to autoindent
-vim.keymap.set("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+-- Keybind to accept selected completion item and notify coc.nvim to autoindent
+vim.keymap.set("i", "<Tab>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use [g and ]g to navigate diagnostics
 vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
