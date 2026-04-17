@@ -2,14 +2,14 @@
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = false
 
 -- OPTIONS
 
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.statusline = '%<%f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
+vim.o.statusline = '%<  %f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
 vim.o.showmode = true
 vim.o.modeline = false
 
@@ -87,7 +87,7 @@ local vim = vim
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
-Plug('navarasu/onedark.nvim')
+Plug 'projekt0n/github-nvim-theme'
 Plug('nvim-tree/nvim-web-devicons')
 Plug('nvim-mini/mini.pick')
 Plug('nvim-mini/mini.diff')
@@ -97,24 +97,13 @@ Plug('lukas-reineke/indent-blankline.nvim')
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
 vim.call('plug#end')
 
-require('onedark').setup({
-	code_style = {
-		comments = 'none',
-		keywords = 'none',
-		functions = 'none',
-		strings = 'none',
-		variables = 'none'
-	},
-})
-
 require('nvim-web-devicons').setup()
-
 require('mini.pick').setup()
 require('mini.diff').setup()
 require('mini.pairs').setup()
 require("ibl").setup()
 
-vim.cmd('colorscheme onedark')
+vim.cmd('colorscheme github_dark_dimmed')
 
 -- MINI.PICK OPTIONS
 
@@ -127,7 +116,7 @@ vim.keymap.set("n", "<leader>fb", ":Pick buffers<CR>", { silent = true })
 local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
 
 -- Keybind to accept selected completion item and notify coc.nvim to autoindent
-vim.keymap.set("i", "<Tab>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+vim.keymap.set("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use [g and ]g to navigate diagnostics
 vim.keymap.set("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
@@ -168,7 +157,6 @@ vim.keymap.set("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
 vim.keymap.set("n", "<space>f", ":call CocAction('format')<cr>")
 
 -- Mappings for CoCList
----@diagnostic disable-next-line: redefined-local
 local opts = { silent = true, nowait = true }
 -- Show all diagnostics
 vim.keymap.set("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)

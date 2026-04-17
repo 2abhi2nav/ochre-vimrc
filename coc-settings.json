@@ -1,10 +1,7 @@
 {
   "inlayHint.enable": false,
+  "suggest.noselect": true,
   "Lua": {
-    "diagnostics": {
-      "globals": [
-        "vim"
-      ]
-    }
+    "diagnostics": { "globals": ["vim"] }
   }
 }
