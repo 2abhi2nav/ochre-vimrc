@@ -9,6 +9,8 @@ vim.g.have_nerd_font = false
 
 vim.g.ale_completion_enabled = 1
 vim.g.ale_lint_on_text_changed = 'always'
+vim.g.ale_floating_preview = 1
+vim.g.ale_cursor_detail = 1
 
 vim.g.ale_linters = {
     python = { 'jedils' },
@@ -32,8 +34,8 @@ vim.o.statusline = '%< %f %h%w%m%r%=%-14.(%l/%L%) %-8.(%P%)'
 vim.o.showmode = false
 vim.o.modeline = false
 
-vim.o.winborder = 'single'
-vim.o.pumborder = 'single'
+vim.o.winborder = 'none'
+vim.o.pumborder = 'none'
 
 vim.o.wrap = true
 vim.o.linebreak = true
@@ -125,7 +127,22 @@ require('mini.pairs').setup()
 require('mini.diff').setup()
 require('mini.pick').setup()
 
-require('lualine').setup()
+require('lualine').setup({
+	options = {
+		icons_enabled = true,
+		theme = 'palenight',
+		component_separators = { left = '|', right = '|'},
+		section_separators = { left = '', right = ''},
+	},
+	 sections = {
+		lualine_a = {'mode'},
+		lualine_b = {'branch', 'diff', 'diagnostics'},
+		lualine_c = {'filename'},
+		lualine_x = {'filetype'},
+		lualine_y = {'progress'},
+		lualine_z = {'location'}
+	},
+})
 require('ibl').setup()
 
 require('mason').setup()
