@@ -14,13 +14,16 @@ vim.g.ale_cursor_detail = 1
 
 vim.g.ale_linters = {
     python = { 'jedils' },
+	c = { 'clangd' },
+	cpp = { 'clangd' },
+	lua = { 'lua-language-server' },
 }
 
 vim.g.ale_fixers = {
     javascript = { 'prettier', 'eslint' },
     python = { 'black' },
-	c = { 'clangd' },
-	cpp = { 'clangd' },
+	c = { 'clang-format' },
+	cpp = { 'clang-format' },
 	lua = { 'lua-format' },
 }
 
@@ -111,6 +114,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.pack.add({
 	'https://github.com/nvim-mini/mini.comment',
 	'https://github.com/nvim-mini/mini.pairs',
+	'https://github.com/nvim-mini/mini.surround',
 	'https://github.com/nvim-mini/mini.diff',
 	'https://github.com/nvim-mini/mini.pick',
 
@@ -124,6 +128,7 @@ vim.pack.add({
 
 require('mini.comment').setup()
 require('mini.pairs').setup()
+require('mini.surround').setup()
 require('mini.diff').setup()
 require('mini.pick').setup()
 
