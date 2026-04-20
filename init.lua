@@ -406,6 +406,7 @@ require("lazy").setup({
 		config = function()
 			require("mini.surround").setup()
 			require("mini.pairs").setup()
+			require("mini.diff").setup()
 		end,
 	},
 
