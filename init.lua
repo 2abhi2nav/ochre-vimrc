@@ -46,8 +46,6 @@ vim.o.confirm = true
 vim.o.swapfile = true
 vim.o.undofile = true
 
-vim.o.completeopt = "menuone,noselect,noinsert"
-
 vim.schedule(function()
 	vim.o.clipboard = "unnamedplus"
 end)
@@ -366,12 +364,6 @@ require("lazy").setup({
 		---@type blink.cmp.Config
 		opts = {
 			keymap = {
-				-- 'default' (recommended) for mappings similar to built-in completions
-				--   <c-y> to accept ([y]es) the completion.
-				-- 'super-tab' for tab to accept
-				-- 'enter' for enter to accept
-				-- 'none' for no mappings
-				--
 				-- All presets have the following mappings:
 				-- <tab>/<s-tab>: move to right/left of your snippet expansion
 				-- <c-space>: Open menu or open docs if already open
@@ -386,8 +378,10 @@ require("lazy").setup({
 			},
 
 			completion = {
-				-- By default, you may press `<c-space>` to show the documentation.
-				documentation = { auto_show = false, auto_show_delay_ms = 500 },
+				documentation = { auto_show = true, auto_show_delay_ms = 500 },
+				list = {
+					selection = { preselect = false },
+				},
 			},
 
 			sources = {
@@ -419,24 +413,24 @@ require("lazy").setup({
 	},
 
 	{
-		'nvim-lualine/lualine.nvim',
+		"nvim-lualine/lualine.nvim",
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = 'palenight',
-				component_separators = { left = '|', right = '|'},
-				section_separators = { left = '', right = ''},
+				theme = "palenight",
+				component_separators = { left = "|", right = "|" },
+				section_separators = { left = "", right = "" },
 			},
-			 sections = {
-				lualine_a = {'mode'},
-				lualine_b = {'branch', 'diff', 'diagnostics'},
-				lualine_c = {'filename'},
-				lualine_x = {'filetype'},
-				lualine_y = {'progress'},
-				lualine_z = {'location'}
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diff", "diagnostics" },
+				lualine_c = { "filename" },
+				lualine_x = { "filetype" },
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
 			},
-		}
-	}
+		},
+	},
 })
 
 vim.cmd("colorscheme catppuccin")
