@@ -255,6 +255,7 @@ require("lazy").setup({
 				python = { "black" },
 				c = { "clangd" },
 				cpp = { "clangd" },
+				lua = { "stylua" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 			},
 		},
