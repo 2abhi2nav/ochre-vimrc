@@ -81,6 +81,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Show diagnostic messages at the end of the current line
+vim.diagnostic.config({
+	virtual_text = { current_line = true },
+})
+
 -- PLUGINS
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -103,16 +108,24 @@ require("lazy").setup({
 		branch = 'master',
 		lazy = false,
 		build = ":TSUpdate",
+
+		-- HERE
 		config = function()
 			require'nvim-treesitter.configs'.setup {
-				ensure_installed = { "c", "lua", "python", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+				ensure_installed = { "c", "lua", "python", "javascript", "typescript", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+				ignore_install = {},
+				modules = {},
 				sync_install = false,
 				auto_install = false,
 				highlight = {
 					enable = true,
 					additional_vim_regex_highlighting = false,
 				},
+				indent = {
+				  enable = true
+				}
 			}
+
 			vim.wo.foldmethod = 'expr'
 			vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 		end
@@ -183,10 +196,12 @@ require("lazy").setup({
 				end,
 			})
 
+			-- HERE
 			---@type table<string, vim.lsp.Config>
 			local servers = {
 				clangd = {},
 				jedi_language_server = {},
+				ts_ls = {},
 				stylua = {},
 
 				lua_ls = {
@@ -213,12 +228,15 @@ require("lazy").setup({
 				},
 			}
 
+			-- HERE
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				-- Tools Mason should install
 				"clangd",
 				"jedi-language-server",
 				"black",
+				"typescript-language-server",
+				"prettier",
 			})
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -251,12 +269,13 @@ require("lazy").setup({
 			default_format_opts = {
 				lsp_format = "fallback",
 			},
+			-- HERE
 			formatters_by_ft = {
 				python = { "black" },
 				c = { "clangd" },
 				cpp = { "clangd" },
 				lua = { "stylua" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascript = { "prettier", stop_after_first = true },
 			},
 		},
 	},
@@ -326,7 +345,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = "auto",
+				theme = "github_dark_dimmed",
 				component_separators = { left = "|", right = "|" },
 				section_separators = { left = "", right = "" },
 			},
@@ -342,9 +361,15 @@ require("lazy").setup({
 	},
 
 	{
-		"sainnhe/sonokai",
-		opts = {},
-	},
+		'projekt0n/github-nvim-theme',
+		name = 'github-theme',
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			require('github-theme').setup()
+
+			vim.cmd('colorscheme github_dark_dimmed')
+		end,
+	}
 })
 
-vim.cmd("colorscheme sonokai")
