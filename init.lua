@@ -39,7 +39,6 @@ vim.o.signcolumn = "yes"
 vim.o.scrolloff = 10
 
 vim.o.cursorline = true
-vim.o.winborder = "none"
 
 vim.o.confirm = true
 vim.o.swapfile = true
@@ -74,17 +73,16 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking text",
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
 		vim.hl.on_yank()
 	end,
 })
 
--- Show diagnostic messages at the end of the current line
-vim.diagnostic.config({
-	virtual_text = { current_line = true },
-})
+-- NEOVIDE
+if vim.g.neovide then
+    vim.o.guifont = "monospace:h12"
+end
 
 -- PLUGINS
 
@@ -149,20 +147,53 @@ require("lazy").setup({
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 				callback = function(event)
 
-					vim.keymap.set('n', 'grr', vim.lsp.buf.references, 		{ buffer = buf, desc = '[G]oto [R]eferences' })
-					vim.keymap.set('n', 'gri', vim.lsp.buf.implementation, 	{ buffer = buf, desc = '[G]oto [I]mplementation' })
-					vim.keymap.set('n', 'grd', vim.lsp.buf.definition, 		{ buffer = buf, desc = '[G]oto [D]efinition' })
-					vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+					vim.keymap.set('n', 'grD', function()
+						MiniExtra.pickers.lsp({ scope = 'declaration'})
+					end, { buffer = buf, desc = '[G]oto [D]eclaration' })
 
-					vim.keymap.set('n', 'gO',  vim.lsp.buf.document_symbol, { buffer = buf, desc = 'Document Symbols' })
-					vim.keymap.set('n', 'gW',  vim.lsp.buf.workspace_symbol,{ buffer = buf, desc = 'Workspace Symbols' })
+					vim.keymap.set('n', 'grd', function()
+						MiniExtra.pickers.lsp({ scope = 'definition'})
+					end, { buffer = buf, desc = '[G]oto [D]efinition' })
+
+					vim.keymap.set('n', 'grt', function()
+						MiniExtra.pickers.lsp({ scope = 'type_definition'})
+					end, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+
+					vim.keymap.set('n', 'grr', function()
+						MiniExtra.pickers.lsp({ scope = 'references'})
+					end, { buffer = buf, desc = '[G]oto [R]eferences' })
+
+					vim.keymap.set('n', 'gri', function()
+						MiniExtra.pickers.lsp({ scope = 'implementation'})
+					end, { buffer = buf, desc = '[G]oto [I]mplementation' })
+
+					vim.keymap.set('n', 'gO', function()
+						MiniExtra.pickers.lsp({ scope = 'document_symbol'})
+					end, { buffer = buf, desc = 'Document Symbols' })
+
+					vim.keymap.set('n', 'gW', function()
+						MiniExtra.pickers.lsp({ scope = 'workspace_symbol'})
+					end, { buffer = buf, desc = 'Workspace Symbols' })
+
+					vim.keymap.set('n', '<leader>d', function()
+						MiniExtra.pickers.diagnostic()
+					end, { buffer = buf, desc = 'Show [D]iagnostics' })
 
 					vim.keymap.set('n', 		'grn', vim.lsp.buf.rename, 		{ buffer = buf, desc = '[R]e[n]ame' })
 					vim.keymap.set({'n', 'x'}, 	'gra', vim.lsp.buf.code_action, { buffer = buf, desc = '[G]oto Code [A]ction' })
-					vim.keymap.set('n', 		'grD', vim.lsp.buf.declaration, { buffer = buf, desc = '[G]oto [D]eclaration' })
 
-					vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { buffer = buf, desc = 'Show [D]iagnostic message' })
-					vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { buffer = buf, desc = 'Show [D]iagnostic [L]ist' })
+					vim.api.nvim_create_autocmd("CursorHold", {
+						callback = function()
+							local opts = {
+								focusable = false,
+								close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+								source = 'always',
+								prefix = ' ',
+								scope = 'line',
+							}
+							vim.diagnostic.open_float(nil, opts)
+						end,
+					})
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client:supports_method("textDocument/documentHighlight", event.buf) then
@@ -218,7 +249,7 @@ require("lazy").setup({
 						Lua = {
 							format = { enable = false }, -- Disable formatting 
 							diagnostics = {
-								globals = { "vim" },
+								globals = { "vim", "buf", "MiniExtra" },
 							},
 							workspace = {
 								library = vim.api.nvim_get_runtime_file("", true),
@@ -325,6 +356,7 @@ require("lazy").setup({
 			require("mini.pairs").setup()
 			require("mini.diff").setup()
 			require("mini.pick").setup()
+			require("mini.extra").setup()
 
 			vim.keymap.set('n', '<leader>ff', ':Pick files<CR>',	 { silent = true })
 			vim.keymap.set('n', '<leader>fg', ':Pick grep_live<CR>', { silent = true })
@@ -345,7 +377,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = "tokyonight",
+				theme = "onedark",
 				component_separators = { left = "|", right = "|" },
 				section_separators = { left = "", right = "" },
 			},
@@ -361,13 +393,16 @@ require("lazy").setup({
 	},
 
 	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
+		"navarasu/onedark.nvim",
+		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
-			vim.cmd('colorscheme tokyonight-night')
-		end,
+			require('onedark').setup {
+				style = 'dark',
+				colors = { red = '#abb2bf' },
+				code_style = { comments = 'none' },
+			}
+			require('onedark').load()
+		end
 	},
 
 })
