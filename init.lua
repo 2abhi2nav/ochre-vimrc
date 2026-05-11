@@ -81,7 +81,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- NEOVIDE
 if vim.g.neovide then
-    vim.o.guifont = "monospace:h12"
+    vim.o.guifont = "monospace:h11.25"
+	vim.g.neovide_cursor_animation_length = 0.00
+	vim.g.neovide_cursor_trail_size = 0
 end
 
 -- PLUGINS
